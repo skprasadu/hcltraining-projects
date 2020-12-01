@@ -1,4 +1,4 @@
-package com.hcl.myproject;
+package com.hcl.myproject.collection;
 
 import java.util.ArrayList;
 import java.util.HashSet;
