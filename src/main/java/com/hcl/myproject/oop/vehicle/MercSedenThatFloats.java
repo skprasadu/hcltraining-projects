@@ -1,6 +1,6 @@
 package com.hcl.myproject.oop.vehicle;
 
-public class MercSedenWithBoat extends MercSedan implements SupportsFloating {
+public class MercSedenThatFloats extends MercSedan implements SupportsFloating {
 
 	@Override
 	public void floater() {
