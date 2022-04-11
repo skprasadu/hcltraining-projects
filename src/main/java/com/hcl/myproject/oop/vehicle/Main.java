@@ -54,13 +54,13 @@ public class Main {
 		//String is special, Integer, Float datatypes are special
 		
 		List<Object> list = new ArrayList<>();
-		list.add(new MercCoupeWithBoat());
+		list.add(new MercCoupeThatFloats());
 		list.add(new MercCoupe());
-		list.add(new MercSedenWithBoat());
+		list.add(new MercSedenThatFloats());
 		for(Object c: list) {
 			((Car)c).drive();
 			if(c instanceof SupportsFloating) {
-				((SupportsFloating) c).floater();
+				((SupportsFloating) c).canFloat();
 			}
 		}
 		

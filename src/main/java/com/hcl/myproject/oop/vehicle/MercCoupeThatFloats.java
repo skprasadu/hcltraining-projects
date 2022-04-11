@@ -1,13 +1,13 @@
 package com.hcl.myproject.oop.vehicle;
 
-public class MercCoupeWithBoat extends MercCoupe implements SupportsFloating {
+public class MercCoupeThatFloats extends MercCoupe implements SupportsFloating {
 	
-	public MercCoupeWithBoat() {
+	public MercCoupeThatFloats() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
 	
-	public MercCoupeWithBoat(int wheels) {
+	public MercCoupeThatFloats(int wheels) {
 		// TODO Auto-generated constructor stub
 		super(wheels);
 	}
