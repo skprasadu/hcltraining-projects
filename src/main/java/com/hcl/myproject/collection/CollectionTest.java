@@ -6,15 +6,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import lombok.val;
-
 public class CollectionTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		String[] inputVals = {"Altaf", "Krishna", "Altaf", "Neil", "Neil", "Aibak"};
-		val arr = new ArrayList<String>();
+		List<String> arr = new ArrayList<String>();
 		
 		for(String inpVal: inputVals) {
 			
