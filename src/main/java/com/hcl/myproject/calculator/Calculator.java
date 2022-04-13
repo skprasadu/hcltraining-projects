@@ -1,6 +1,7 @@
 //Never have default package, always have a class under a package com.hcl.***
 package com.hcl.myproject.calculator;
 
+import java.util.InputMismatchException;
 //Never have wildcard package names like java.util.* something like that
 import java.util.Scanner;
 
@@ -10,62 +11,72 @@ public class Calculator {
 		//Refactored the banner
 		printSplashBanner();
 
-		Scanner myObj = new Scanner(System.in); // Create a Scanner object
+		//try with resources
+		try(Scanner myObj = new Scanner(System.in);) { // Create a Scanner object
 
-		while (true) {
-			//Created a BinaryOperation class and are getting multiple 
-			//return values from a function
-			BinaryOperation binaryOperation = getAllInputs(myObj);
-
-			// Used Switch case and made the code more readable
-			switch (binaryOperation.operation) {
-			case '*':
-				multiply(binaryOperation.num1, binaryOperation.num2);
-				break;
-			case '+':
-				add(binaryOperation.num1, binaryOperation.num2);
-				break;
-			case '-':
-				substract(binaryOperation.num1, binaryOperation.num2);
-				break;
-			case '/':
-				divide(binaryOperation.num1, binaryOperation.num2);
-				break;
-			case '^':
-				power(binaryOperation.num1, binaryOperation.num2);
-				break;
-			case '%':
-				mod(binaryOperation.num1, binaryOperation.num2);
-				break;
-			default:
-				invalidOperator();
-				break;
+			while (true) {
+				//Created a BinaryOperation class and are getting multiple 
+				//return values from a function
+				BinaryOperation binaryOperation = getAllInputs(myObj);
+	
+				// Used Switch case and made the code more readable
+				switch (binaryOperation.operation) {
+				case '*':
+					multiply(binaryOperation.num1, binaryOperation.num2);
+					break;
+				case '+':
+					add(binaryOperation.num1, binaryOperation.num2);
+					break;
+				case '-':
+					substract(binaryOperation.num1, binaryOperation.num2);
+					break;
+				case '/':
+					divide(binaryOperation.num1, binaryOperation.num2);
+					break;
+				case '^':
+					power(binaryOperation.num1, binaryOperation.num2);
+					break;
+				case '%':
+					mod(binaryOperation.num1, binaryOperation.num2);
+					break;
+				default:
+					invalidOperator();
+					break;
+				}
+	
+				//Footer with a boolean to exit
+				if(footer(myObj)) {
+					break;
+				}
+	
 			}
-
-			//Footer with a boolean to exit
-			if(footer(myObj)) {
-				break;
-			}
-
 		}
+		//myObj.close();
 	}
 
 	private static BinaryOperation getAllInputs(Scanner myObj) {
+		BinaryOperation binaryOperation = new BinaryOperation();
 		System.out.print("\n _____________\n|             |\n|New Operation|\n|_____________|\n");
 		System.out.print("\nEnter Number 1: ");
-		double num1 = myObj.nextDouble();
+		double num1 = 0, num2 = 0;
+		//try {
+			num1 = myObj.nextDouble();
+		
+			System.out.print("\nEnter Number 2: ");
+		
+		
+			num2 = myObj.nextDouble();
 
-		System.out.print("\nEnter Number 2: ");
-		double num2 = myObj.nextDouble();
-
-		System.out.print("\nChoose an Operation:  +, -, *, /, ^ , or % : ");
-		char operator = myObj.next().charAt(0);
-
-		System.out.print("\nResult: ");
-		BinaryOperation binaryOperation = new BinaryOperation();
-		binaryOperation.operation = operator;
-		binaryOperation.num1 = num1;
-		binaryOperation.num2 = num2;
+			System.out.print("\nChoose an Operation:  +, -, *, /, ^ , or % : ");
+			char operator = myObj.next().charAt(0);
+	
+			System.out.print("\nResult: ");
+			binaryOperation.operation = operator;
+			binaryOperation.num1 = num1;
+			binaryOperation.num2 = num2;
+		//} catch(InputMismatchException e) {
+		//	System.out.println("Inputs invalid, continuing");
+		//}
 		return binaryOperation;
 	}
 
@@ -99,8 +110,13 @@ public class Calculator {
 	}
 
 	private static void divide(double num1, double num2) {
-		double result = num1 / num2;
-		System.out.println(num1 + " / " + num2 + " = " + result);
+		try {
+			double result = num1 / num2;
+			int x = 1/0;
+			System.out.println(num1 + " / " + num2 + " = " + result);
+		} catch(ArithmeticException a) {
+			System.out.println("**Divide by 0 is not allowed");
+		}
 	}
 
 	private static void substract(double num1, double num2) {
