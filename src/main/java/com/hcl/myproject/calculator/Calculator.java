@@ -10,6 +10,10 @@ public class Calculator {
 	public static void main(String args[]) {
 		//Refactored the banner
 		printSplashBanner();
+		
+		//Option1: operate(num1, num2, num1+num2), operate(num1, num2, num1*num2)
+		//Option2: operate(num1, num2, );
+		//operate(num1, num2, (num1, num2) -> dosomething);
 
 		//try with resources
 		try(Scanner myObj = new Scanner(System.in);) { // Create a Scanner object
@@ -20,21 +24,60 @@ public class Calculator {
 				BinaryOperation binaryOperation = getAllInputs(myObj);
 	
 				// Used Switch case and made the code more readable
+				double result = 0;
 				switch (binaryOperation.operation) {
-				case '*':
-					multiply(binaryOperation.num1, binaryOperation.num2);
-					break;
 				case '+':
-					add(binaryOperation.num1, binaryOperation.num2);
+					//add(binaryOperation.num1, binaryOperation.num2);
+					//Dirtiest
+					/*result = operate(binaryOperation.num1, binaryOperation.num2, 
+							new AdditionMathOperation());*/
+					result = operate(binaryOperation.num1, binaryOperation.num2, 
+							(num1, num2) ->  num1+ num2);
+
 					break;
 				case '-':
-					substract(binaryOperation.num1, binaryOperation.num2);
+					//substract(binaryOperation.num1, binaryOperation.num2);
+					//Still dirty
+					/*result = operate(binaryOperation.num1, binaryOperation.num2, 
+							new MathOperation() {
+								
+								@Override
+								public double operate(double num1, double num2) {
+									return num1 - num2;
+								}
+							});*/
+					result = operate(binaryOperation.num1, binaryOperation.num2, 
+							(num1, num2) ->  num1 - num2);
+
 					break;
 				case '/':
-					divide(binaryOperation.num1, binaryOperation.num2);
+					//divide(binaryOperation.num1, binaryOperation.num2);
+					//Still not good
+					/*result = operate(binaryOperation.num1, binaryOperation.num2, 
+							(double num1, double num2) -> {
+									return num1 / num2;
+								}
+							);*/
+					result = operate(binaryOperation.num1, binaryOperation.num2, 
+							(num1, num2) ->  num1/ num2);
+
+					break;
+				case '*':
+					//multiply(binaryOperation.num1, binaryOperation.num2);
+					//Still ok, it uses type inference
+					/*result = operate(binaryOperation.num1, binaryOperation.num2, 
+							(num1, num2) -> {
+									return num1 * num2;
+								}
+							);*/
+					result = operate(binaryOperation.num1, binaryOperation.num2, 
+							(num1, num2) ->  num1* num2);
+
 					break;
 				case '^':
-					power(binaryOperation.num1, binaryOperation.num2);
+					//power(binaryOperation.num1, binaryOperation.num2);
+					result = operate(binaryOperation.num1, binaryOperation.num2, 
+							(num1, num2) ->  Math.pow(num1, num2));
 					break;
 				case '%':
 					mod(binaryOperation.num1, binaryOperation.num2);
@@ -43,7 +86,8 @@ public class Calculator {
 					invalidOperator();
 					break;
 				}
-	
+				System.out.println(binaryOperation.num1 + " " + binaryOperation.operation + " " + binaryOperation.num2 + " = " + result);
+
 				//Footer with a boolean to exit
 				if(footer(myObj)) {
 					break;
@@ -98,6 +142,14 @@ public class Calculator {
 		}
 		return false;
 	}
+	
+	private static double operate(double num1, double num2, MathOperation opFn) {
+		
+		/*double result = num1 % num2;
+		System.out.println(num1 + " % " + num2 + " = " + result);*/
+		return opFn.operate(num1, num2);
+	}
+
 
 	private static void mod(double num1, double num2) {
 		double result = num1 % num2;
@@ -147,4 +199,19 @@ class BinaryOperation {
 	char operation;
 	double num1;
 	double num2;
+}
+
+@FunctionalInterface
+interface MathOperation {
+	double operate(double num1, double num2);
+	//double operateWithArgument(double num);
+}
+
+class AdditionMathOperation implements MathOperation {
+
+	@Override
+	public double operate(double n1, double n2) {
+		// TODO Auto-generated method stub
+		return n1+n2;
+	}
 }
