@@ -122,7 +122,7 @@ public class StudentServiceFileImpl {
 		System.out.print("What is the student ID: ");
 		int id = myObj.nextInt();
 
-		for (Student1 curr : studentSet) {
+		/*for (Student1 curr : studentSet) {
 			if (curr.getID() == id) {
 				System.out.println("_______________________________________________________________\n");
 				System.out.println("Student information: \nName: " + curr.getName() + "\nAge: " + curr.getAge()
@@ -130,7 +130,17 @@ public class StudentServiceFileImpl {
 				System.out.println("_______________________________________________________________\n");
 				return;
 			}
-		}
+		}*/
+		
+		studentSet.stream().forEach(curr -> {
+			if (curr.getID() == id) {
+				System.out.println("_______________________________________________________________\n");
+				System.out.println("Student information: \nName: " + curr.getName() + "\nAge: " + curr.getAge()
+						+ "\nID :" + curr.getID() + "\nDate Added: " + curr.getDate());
+				System.out.println("_______________________________________________________________\n");
+				return;
+			}
+		});
 		idNotInStore(id);
 
 	}
