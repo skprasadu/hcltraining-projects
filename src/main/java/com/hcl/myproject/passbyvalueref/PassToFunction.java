@@ -85,6 +85,6 @@ public class PassToFunction {
 		int temp = x;
 		x = y;
 		y = temp;
-		
+		System.out.println(String.format("In the function %d %d", x, y));
 	}
 }
